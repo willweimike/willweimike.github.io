@@ -1,6 +1,5 @@
 ---
 import { profileData } from '../data/profile';
-import { withBase } from '../utils/url';
 ---
 
 <section id="about" class="hero">
@@ -31,9 +30,6 @@ import { withBase } from '../utils/url';
     </a>
     <a href={`mailto:${profileData.contact.email}`} class="hero-btn">
       Email
-    </a>
-    <a href={withBase('/writing')} class="hero-btn">
-      Read Blog →
     </a>
   </div>
 </section>

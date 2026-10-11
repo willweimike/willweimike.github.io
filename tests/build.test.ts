@@ -45,6 +45,7 @@ describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages
     expect(indexHtml).toContain('AMD Strix Halo');
     expect(indexHtml).not.toContain('id="writing"');
     expect(indexHtml).not.toContain('Writing & Technical Notes');
+    expect(indexHtml).not.toContain('Read Blog →');
     expect(indexHtml).toContain('id="contact"');
     expect(indexHtml).toContain('04 / CONTACT');
     expect(indexHtml).not.toContain('05 / CONTACT');
