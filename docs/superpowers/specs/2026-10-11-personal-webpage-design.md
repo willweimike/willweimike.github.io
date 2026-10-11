@@ -68,7 +68,7 @@ The site consists of four routes:
        - Tags: `AI Inferencing`, `LLMOps`, `MLOps`
      - **llama.cpp (`ggml-org/llama.cpp`)** — *Contributor (Mar 2026 – Present)*
        - Local and edge LLM inference engine in C/C++ with wide hardware acceleration support.
-       - Linked PRs: [`#30268`](https://github.com/ggml-org/llama.cpp/pull/30268), [`#29408`](https://github.com/ggml-org/llama.cpp/pull/29408)
+       - Linked PRs: [`#30268`](https://github.com/ggml-org/llama.cpp/pull/30268), [`#29408`](https://github.com/ggml-org/llama.cpp/pull/29408), [`#29309`](https://github.com/ggml-org/llama.cpp/pull/29309)
        - Tags: `AI Inferencing`, `C/C++`, `Local LLM`
      - **Agent-Threat-Rules** — *Contributor (Mar 2026 – May 2026)*
        - Added support for OpenAI-compatible and local Ollama model integrations, CLI testing workflows, and JSON-mode compatibility options for agent security evaluation.

@@ -36,6 +36,7 @@ describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages
     expect(indexHtml).toContain('https://github.com/sgl-project/sglang/pull/43293');
     expect(indexHtml).toContain('https://github.com/vllm-project/vllm/pull/60775');
     expect(indexHtml).toContain('https://github.com/ggml-org/llama.cpp/pull/30268');
+    expect(indexHtml).toContain('https://github.com/ggml-org/llama.cpp/pull/29309');
     expect(indexHtml).toContain('id="experience"');
     expect(indexHtml).toContain('Mobiletron Electronics Co Ltd');
     expect(indexHtml).toContain('Saturn Imaging');

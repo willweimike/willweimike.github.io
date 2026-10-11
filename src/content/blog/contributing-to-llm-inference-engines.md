@@ -24,7 +24,7 @@ Using these tools daily in production inevitably surfaces edge cases—subtle co
 Contributing across `llama.cpp`, `vLLM`, and `SGLang` simultaneously offers a rare comparative view of modern AI systems engineering:
 
 ### 1. `llama.cpp`: Zero-Bloat Systems Discipline
-Working on `llama.cpp` (such as PRs [`#30268`](https://github.com/ggml-org/llama.cpp/pull/30268) and [`#29408`](https://github.com/ggml-org/llama.cpp/pull/29408)) reinforces strict C/C++ discipline. Every allocation, tensor layout, and quantization kernel matters because users run it on everything from workstation GPUs to consumer laptops and embedded devices.
+Working on `llama.cpp` (such as PRs [`#30268`](https://github.com/ggml-org/llama.cpp/pull/30268), [`#29408`](https://github.com/ggml-org/llama.cpp/pull/29408), and [`#29309`](https://github.com/ggml-org/llama.cpp/pull/29309)) reinforces strict C/C++ discipline. Every allocation, tensor layout, and quantization kernel matters because users run it on everything from workstation GPUs to consumer laptops and embedded devices.
 
 ### 2. `vLLM`: Production Scale & Hardware Abstraction
 In `vLLM` (PRs [`#60775`](https://github.com/vllm-project/vllm/pull/60775), [`#58822`](https://github.com/vllm-project/vllm/pull/58822), [`#58666`](https://github.com/vllm-project/vllm/pull/58666)), you see how a massive open-source community coordinates model architectures, distributed tensor parallelism, and continuous batching without breaking backward compatibility for thousands of enterprise deployments.

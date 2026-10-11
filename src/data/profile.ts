@@ -128,6 +128,7 @@ export const profileData: ProfileData = {
       pullRequests: [
         { number: 30268, url: 'https://github.com/ggml-org/llama.cpp/pull/30268' },
         { number: 29408, url: 'https://github.com/ggml-org/llama.cpp/pull/29408' },
+        { number: 29309, url: 'https://github.com/ggml-org/llama.cpp/pull/29309' },
       ],
       tags: ['AI Inferencing', 'C/C++', 'Local LLM', 'Quantization'],
     },

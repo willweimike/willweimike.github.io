@@ -57,6 +57,7 @@ describe('Feature: Portfolio Identity, Open-Source Contributions, and Privacy Pr
       'https://github.com/vllm-project/vllm/pull/58666',
       'https://github.com/ggml-org/llama.cpp/pull/30268',
       'https://github.com/ggml-org/llama.cpp/pull/29408',
+      'https://github.com/ggml-org/llama.cpp/pull/29309',
     ]);
   });
 
