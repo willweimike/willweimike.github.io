@@ -196,9 +196,74 @@ Whether the repository is named `willweimike.github.io` (root path `/`) or a pro
 
 ---
 
-## 5. Error Handling, Testing & Verification Criteria
+## 5. Behavior-Driven Development (BDD) Acceptance Specifications
 
-1. **Build-Time Schema Validation:** Invalid Markdown frontmatter or missing required fields fail the build immediately with descriptive Zod errors.
-2. **Privacy Regression Test (`tests/profile.test.ts`):** Automated test asserts that sensitive personal details (phone number `0906065826`, birthday) never appear in `src/data/profile.ts` or the compiled `dist/` directory.
-3. **Bilingual Reading Time Utility (`tests/readingTime.test.ts`):** Accurately counts both whitespace-delimited English words and CJK characters so Chinese posts like *《AI 時代的 PM 指南》* display realistic reading times.
-4. **Static Output Verification (`tests/build.test.ts`):** Confirms `npm run build` succeeds and generates `dist/index.html`, `dist/writing/index.html`, both seeded blog post pages, `dist/rss.xml`, and `dist/404.html` with all expected PR links (`sglang`, `vllm`, `llama.cpp`).
+All features are specified using Gherkin (`Feature` / `Scenario` / `Given` / `When` / `Then`) and verified via automated TDD test suites (`tests/*.test.ts`).
+
+```gherkin
+Feature: Portfolio Identity, Open-Source Contributions, and Privacy Protection
+  As an engineering leader, recruiter, or open-source peer visiting Will Liu's website
+  I want to inspect his verified AI Inference & AI PM credentials and upstream PRs
+  Without exposing sensitive personal data (mobile phone number or birthday)
+
+  Scenario: Visitor views Will Liu's core identity and public contact channels
+    Given the profile data in "src/data/profile.ts"
+    When the portfolio homepage is rendered
+    Then the page displays "Cheng-Wei (Will) Liu" and headline "AI Inference Engineer | AI PM"
+    And the public contact links include GitHub ("https://github.com/willweimike/"), LinkedIn ("https://www.linkedin.com/in/willweimike"), and Email ("willie20220101@gmail.com")
+
+  Scenario: Sensitive personal data from LinkedIn is strictly excluded
+    Given the profile data and the compiled static site in "dist/"
+    When all data objects and generated HTML/XML files are scanned
+    Then neither the phone number "0906065826" nor birthday ("October 3", "10月3日", "10 月 3 日") appears anywhere
+
+  Scenario: Visitor inspects upstream Open-Source Pull Requests and Verified Certifications
+    Given Will's open-source contributions to SGLang, vLLM, llama.cpp, and Agent-Threat-Rules
+    When the "#open-source" and "#skills" sections are rendered on the homepage
+    Then clickable PR badges link directly to:
+      | Project   | Pull Requests                            |
+      | SGLang    | #43293, #42596, #42595                   |
+      | vLLM      | #60775, #58822, #58666                   |
+      | llama.cpp | #30268, #29408                           |
+    And all external links include rel="noopener noreferrer"
+    And APIsec University certifications link to their official Credly verification URLs
+```
+
+```gherkin
+Feature: Bilingual Technical Blog & Reading Time Estimation
+  As a reader browsing Will's technical notes and "AI 時代的 PM 指南" series
+  I want accurate reading-time estimates for both English and Traditional Chinese articles
+  And clean navigation between the homepage preview, "/writing" archive, and article pages
+
+  Scenario: Reading time calculation for English, Traditional Chinese (CJK), and code-heavy posts
+    Given a Markdown article body
+    When calculateReadingTime() processes the content
+    Then frontmatter and fenced code blocks ("```...```") are excluded from the word count
+    And English prose is measured at ~220 words per minute
+    And Traditional Chinese CJK characters are measured at ~350 characters per minute
+    And short or empty inputs return a minimum of "1 min read"
+
+  Scenario: Published articles appear in the archive and RSS feed while drafts stay hidden
+    Given Markdown files in "src/content/blog/" validated against the Zod schema
+    When the static site is built
+    Then "/writing/pm-guide-in-the-ai-era-part-1/index.html" and "/writing/contributing-to-llm-inference-engines/index.html" are generated
+    And "/rss.xml" contains RSS 2.0 items for all published (draft: false) articles
+    And any article marked "draft: true" is omitted from the homepage, archive, and RSS feed
+```
+
+```gherkin
+Feature: GitHub Pages Subpath Resilience & Error Handling
+  As the site owner deploying to GitHub Pages (root domain or project subpath)
+  I want all internal routes and fallback pages to resolve without broken links
+
+  Scenario: Internal URLs adapt to root ("/") or repository subpath ("/personal_webpage")
+    Given a target route such as "/writing" or "/#open-source"
+    When withBase() resolves the URL with BASE_URL="/" or BASE_URL="/personal_webpage"
+    Then the resulting href is "/writing" for root deployment and "/personal_webpage/writing" for subpath deployment
+
+  Scenario: Visitor navigates to a non-existent route
+    Given the compiled static site in "dist/"
+    When a user requests an unknown URL
+    Then "dist/404.html" renders with themed navigation links back to Home and Writing
+```
+
