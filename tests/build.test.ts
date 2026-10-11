@@ -43,8 +43,11 @@ describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages
     expect(indexHtml).toContain('id="skills"');
     expect(indexHtml).toContain('NVIDIA DGX Spark');
     expect(indexHtml).toContain('AMD Strix Halo');
-    expect(indexHtml).toContain('id="writing"');
+    expect(indexHtml).not.toContain('id="writing"');
+    expect(indexHtml).not.toContain('Writing & Technical Notes');
     expect(indexHtml).toContain('id="contact"');
+    expect(indexHtml).toContain('04 / CONTACT');
+    expect(indexHtml).not.toContain('05 / CONTACT');
     const footerHtml = indexHtml.split('<footer')[1] ?? '';
     expect(footerHtml).not.toContain('Taichung City, Taiwan');
     expect(indexHtml).toContain(
