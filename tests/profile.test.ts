@@ -71,6 +71,9 @@ describe('Feature: Portfolio Identity, Open-Source Contributions, and Privacy Pr
     expect(profileData.education[0].gpa).toBe('3.82');
 
     expect(profileData.skillCategories).toHaveLength(3);
+    expect(profileData.skillCategories[0].title).toBe('LLM Inference & MLOps');
+    expect(profileData.skillCategories[0].skills).toContain('NVIDIA DGX Spark');
+    expect(profileData.skillCategories[0].skills).toContain('AMD Strix Halo');
     expect(profileData.certifications).toHaveLength(3);
     for (const cert of profileData.certifications) {
       if (cert.credentialUrl) {

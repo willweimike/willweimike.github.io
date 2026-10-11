@@ -213,6 +213,8 @@ export const profileData: ProfileData = {
         'vLLM',
         'SGLang',
         'llama.cpp',
+        'NVIDIA DGX Spark',
+        'AMD Strix Halo',
         'Model Quantization',
         'System Deployment',
         'Deep Learning',

@@ -90,7 +90,7 @@ The site consists of four routes:
 
 4. **Skills & Verified Certifications (`#skills`):**
    - **Categorized Skill Matrix:**
-     - **LLM Inference & MLOps:** AI Inferencing, LLMOps, MLOps, Model Quantization & Benchmarking, System Deployment, Deep Learning, Artificial Intelligence (AI)
+     - **LLM Inference & MLOps:** AI Inferencing, LLMOps, MLOps, vLLM, SGLang, llama.cpp, NVIDIA DGX Spark, AMD Strix Halo, Model Quantization & Benchmarking, System Deployment, Deep Learning, Artificial Intelligence (AI)
      - **AI Product & Software Engineering:** Project Management (AI PM), Intelligent Agents, Software Design, Software Development, REST API Development, Python, Java, PostgreSQL, Data Engineering, Data Mining
      - **Cloud, DevOps & Security:** Amazon Web Services (AWS), DevOps, Information Security, LLM & API Security
    - **Licenses & Certifications:**

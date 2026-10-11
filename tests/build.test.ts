@@ -41,6 +41,8 @@ describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages
     expect(indexHtml).toContain('Mobiletron Electronics Co Ltd');
     expect(indexHtml).toContain('Saturn Imaging');
     expect(indexHtml).toContain('id="skills"');
+    expect(indexHtml).toContain('NVIDIA DGX Spark');
+    expect(indexHtml).toContain('AMD Strix Halo');
     expect(indexHtml).toContain('id="writing"');
     expect(indexHtml).toContain('id="contact"');
     expect(indexHtml).toContain(
