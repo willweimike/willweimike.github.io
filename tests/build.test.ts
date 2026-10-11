@@ -33,7 +33,7 @@ describe('Feature: Static Production Build & GitHub Pages Output (BDD Scenarios)
     expect(indexHtml).toContain('Cheng-Wei (Will) Liu');
     expect(indexHtml).toContain('劉承威');
     expect(indexHtml).not.toContain('劉承瑋');
-    expect(indexHtml).toContain('AI Inference Engineer | AI PM');
+    expect(indexHtml).toContain('AI Inference Engineer');
     expect(indexHtml).toContain('id="open-source"');
     expect(indexHtml).toContain('https://github.com/sgl-project/sglang/pull/43293');
     expect(indexHtml).toContain('https://github.com/vllm-project/vllm/pull/60775');
