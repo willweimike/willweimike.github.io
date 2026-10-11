@@ -1,0 +1,102 @@
+---
+import { getCollection } from 'astro:content';
+import { calculateReadingTime } from '../utils/readingTime';
+import { withBase } from '../utils/url';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<section id="writing" class="section">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span class="section-index">04</span>
+      Writing & Technical Notes
+    </h2>
+    <a href={withBase('/writing')} class="mono view-all">
+      View all articles →
+    </a>
+  </div>
+
+  <div class="posts-stack">
+    {posts.map((post) => {
+      const reading = calculateReadingTime(post.body ?? '');
+      const dateStr = post.data.pubDate.toISOString().slice(0, 10);
+      return (
+        <a href={withBase(`/writing/${post.id}`)} class="card post-card">
+          <div class="post-meta mono">
+            <time datetime={dateStr}>{dateStr}</time>
+            <span>·</span>
+            <span>{reading.label}</span>
+            <span>·</span>
+            <span class="lang-badge">{post.data.lang.toUpperCase()}</span>
+          </div>
+          <h3 class="post-title">{post.data.title}</h3>
+          <p class="post-desc">{post.data.description}</p>
+          <div class="tag-row">
+            {post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+          </div>
+        </a>
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  .view-all {
+    font-size: 0.82rem;
+    color: var(--accent-primary);
+  }
+
+  .view-all:hover {
+    text-decoration: underline;
+  }
+
+  .posts-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .lang-badge {
+    color: var(--accent-primary);
+    font-weight: 500;
+  }
+
+  .post-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .post-card:hover .post-title {
+    color: var(--accent-primary);
+  }
+
+  .post-desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding-top: 0.2rem;
+  }
+</style>

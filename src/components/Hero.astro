@@ -1,0 +1,131 @@
+---
+import { profileData } from '../data/profile';
+import { withBase } from '../utils/url';
+---
+
+<section id="about" class="hero">
+  <div class="status-pill mono">
+    <span class="status-dot"></span>
+    <span>{profileData.statusBadge}</span>
+  </div>
+
+  <h1 class="hero-title">
+    {profileData.name}
+    <span class="zh-name">{profileData.zhName}</span>
+  </h1>
+
+  <p class="hero-headline mono">{profileData.headline} · {profileData.location}</p>
+
+  <p class="hero-tagline">{profileData.tagline}</p>
+
+  <div class="hero-about">
+    {profileData.about.map((paragraph) => <p>{paragraph}</p>)}
+  </div>
+
+  <div class="hero-links mono">
+    <a href={profileData.contact.github} target="_blank" rel="noopener noreferrer" class="hero-btn primary">
+      GitHub (@{profileData.handle}) ↗
+    </a>
+    <a href={profileData.contact.linkedin} target="_blank" rel="noopener noreferrer" class="hero-btn">
+      LinkedIn ↗
+    </a>
+    <a href={`mailto:${profileData.contact.email}`} class="hero-btn">
+      Email
+    </a>
+    <a href={withBase('/writing')} class="hero-btn">
+      Read Blog →
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: 1rem;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: var(--pr-bg);
+    color: var(--pr-text);
+    border: 1px solid var(--pr-border);
+    font-size: 0.76rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-secondary);
+    box-shadow: 0 0 8px var(--accent-secondary);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 4.5vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .zh-name {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .hero-headline {
+    font-size: 0.95rem;
+    color: var(--accent-primary);
+    margin-bottom: 1.15rem;
+  }
+
+  .hero-tagline {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.55;
+  }
+
+  .hero-about p {
+    color: var(--text-secondary);
+    font-size: 0.96rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero-btn {
+    padding: 0.5rem 0.95rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+  }
+
+  .hero-btn:hover {
+    border-color: var(--border-accent);
+    color: var(--accent-primary);
+  }
+
+  .hero-btn.primary {
+    background: var(--badge-bg);
+    border-color: var(--border-accent);
+    color: var(--accent-primary);
+  }
+</style>

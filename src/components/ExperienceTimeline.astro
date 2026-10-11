@@ -1,0 +1,158 @@
+---
+import { profileData } from '../data/profile';
+---
+
+<section id="experience" class="section">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span class="section-index">02</span>
+      Experience & Education
+    </h2>
+    <span class="mono section-sub">Production AI & Academic Foundation</span>
+  </div>
+
+  <div class="timeline-group">
+    <h3 class="mono group-label">WORK EXPERIENCE</h3>
+    <div class="stack">
+      {profileData.experience.map((job) => (
+        <article class="card timeline-card">
+          <div class="timeline-header">
+            <div>
+              <h4 class="role-title">{job.role}</h4>
+              <p class="company-name">{job.company} · <span class="mono">{job.employmentType}</span></p>
+            </div>
+            <div class="timeline-meta mono">
+              <span>{job.period}</span>
+              <span>{job.location}</span>
+            </div>
+          </div>
+
+          <ul class="highlight-list">
+            {job.highlights.map((bullet) => <li>{bullet}</li>)}
+          </ul>
+
+          <div class="tag-row">
+            {job.skills.map((skill) => <span class="tag">{skill}</span>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <div class="timeline-group edu-group">
+    <h3 class="mono group-label">EDUCATION</h3>
+    <div class="edu-grid">
+      {profileData.education.map((edu) => (
+        <article class="card edu-card">
+          <div class="edu-top">
+            <h4 class="role-title">{edu.institution}</h4>
+            <span class="pr-pill">GPA {edu.gpa}</span>
+          </div>
+          <p class="company-name">{edu.degree}</p>
+          <p class="mono edu-period">{edu.period} · {edu.location}</p>
+          <div class="tag-row">
+            {edu.focus.map((item) => <span class="tag">{item}</span>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-sub {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .group-label {
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .edu-group {
+    margin-top: 2rem;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .role-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .company-name {
+    font-size: 0.92rem;
+    color: var(--accent-primary);
+  }
+
+  .timeline-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .highlight-list {
+    margin: 0 0 1rem 1.2rem;
+    color: var(--text-secondary);
+    font-size: 0.93rem;
+  }
+
+  .highlight-list li {
+    margin-bottom: 0.4rem;
+  }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .edu-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .edu-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .edu-period {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  @media (max-width: 640px) {
+    .timeline-meta {
+      align-items: flex-start;
+    }
+  }
+</style>

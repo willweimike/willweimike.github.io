@@ -1,0 +1,120 @@
+---
+import { profileData } from '../data/profile';
+import { withBase } from '../utils/url';
+---
+
+<footer id="contact" class="site-footer">
+  <div class="footer-inner">
+    <div class="contact-card card">
+      <div class="contact-copy">
+        <p class="mono contact-eyebrow">05 / CONTACT</p>
+        <h2>Let's build fast, reliable AI systems.</h2>
+        <p>
+          Open to discussions on LLM inference optimization, on-premises AI infrastructure, open-source collaboration, and AI Product Management roles.
+        </p>
+      </div>
+      <div class="contact-actions">
+        <a href={`mailto:${profileData.contact.email}`} class="btn-primary mono">
+          {profileData.contact.email}
+        </a>
+        <div class="social-links mono">
+          <a href={profileData.contact.github} target="_blank" rel="noopener noreferrer">
+            GitHub ↗
+          </a>
+          <a href={profileData.contact.linkedin} target="_blank" rel="noopener noreferrer">
+            LinkedIn ↗
+          </a>
+          <a href={withBase('/rss.xml')}>
+            RSS ↗
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-meta mono">
+      <span>© {new Date().getFullYear()} {profileData.name} ({profileData.zhName})</span>
+      <span>{profileData.location}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    width: 100%;
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3.5rem;
+    scroll-margin-top: 5rem;
+  }
+
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-eyebrow {
+    font-size: 0.78rem;
+    color: var(--accent-primary);
+    margin-bottom: 0.35rem;
+  }
+
+  .contact-copy h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.45rem;
+    letter-spacing: -0.02em;
+  }
+
+  .contact-copy p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  .contact-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    background: var(--badge-bg);
+    color: var(--accent-primary);
+    border: 1px solid var(--border-accent);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-primary);
+    color: #0B0F17;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1.15rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  .social-links a:hover {
+    color: var(--accent-primary);
+  }
+
+  .footer-meta {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+</style>

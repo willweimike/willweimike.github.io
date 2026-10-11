@@ -1,0 +1,134 @@
+---
+import { profileData } from '../data/profile';
+import { withBase } from '../utils/url';
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href={withBase('/')} class="brand">
+      <span class="brand-monogram mono">WL</span>
+      <span class="brand-name">{profileData.name}</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary Navigation">
+      <a href={withBase('/#open-source')}>Open Source</a>
+      <a href={withBase('/#experience')}>Experience</a>
+      <a href={withBase('/#skills')}>Skills</a>
+      <a href={withBase('/writing')}>Writing</a>
+      <a href={withBase('/#contact')}>Contact</a>
+      <button
+        id="theme-toggle"
+        type="button"
+        class="theme-btn mono"
+        aria-label="Toggle color theme"
+        title="Toggle dark/light mode"
+      >
+        <span class="theme-label">THEME</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  (() => {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem('theme', next);
+      } catch {}
+    });
+  })();
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: var(--bg-glass);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .header-inner {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 0.9rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .brand-monogram {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: var(--badge-bg);
+    color: var(--accent-primary);
+    border: 1px solid var(--border-accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+  }
+
+  .site-nav a:hover {
+    color: var(--accent-primary);
+  }
+
+  .theme-btn {
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 0.25rem 0.55rem;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .theme-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--border-accent);
+  }
+
+  @media (max-width: 640px) {
+    .header-inner {
+      padding: 0.75rem 1.15rem;
+    }
+
+    .brand-name {
+      display: none;
+    }
+
+    .site-nav {
+      gap: 0.75rem;
+      font-size: 0.82rem;
+    }
+  }
+</style>

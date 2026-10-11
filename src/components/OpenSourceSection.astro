@@ -1,0 +1,120 @@
+---
+import { profileData } from '../data/profile';
+---
+
+<section id="open-source" class="section">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span class="section-index">01</span>
+      Open-Source Contributions & Projects
+    </h2>
+    <span class="mono section-sub">Upstream LLM Engines & Security</span>
+  </div>
+
+  <div class="oss-grid">
+    {profileData.openSource.map((item) => (
+      <article class="card oss-card">
+        <div class="oss-top">
+          <div>
+            <h3 class="oss-title">
+              <a href={item.repoUrl} target="_blank" rel="noopener noreferrer">
+                {item.project}
+                <span class="mono oss-repo">({item.repo}) ↗</span>
+              </a>
+            </h3>
+            <p class="mono oss-role">{item.role} · {item.period}</p>
+          </div>
+        </div>
+
+        <p class="oss-desc">{item.description}</p>
+
+        {item.pullRequests.length > 0 && (
+          <div class="pr-list">
+            <span class="mono pr-label">Pull Requests:</span>
+            {item.pullRequests.map((pr) => (
+              <a
+                href={pr.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="pr-pill"
+              >
+                <span>PR #{pr.number}</span>
+                <span>↗</span>
+              </a>
+            ))}
+          </div>
+        )}
+
+        <div class="tag-row">
+          {item.tags.map((tag) => <span class="tag">{tag}</span>)}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .section-sub {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .oss-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .oss-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .oss-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .oss-title a:hover {
+    color: var(--accent-primary);
+  }
+
+  .oss-repo {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-left: 0.35rem;
+  }
+
+  .oss-role {
+    font-size: 0.78rem;
+    color: var(--accent-primary);
+    margin-top: 0.15rem;
+  }
+
+  .oss-desc {
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+  }
+
+  .pr-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 0.2rem;
+  }
+
+  .pr-label {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    padding-top: 0.25rem;
+  }
+</style>
