@@ -78,7 +78,7 @@ export const profileData: ProfileData = {
   statusBadge: 'Active OSS Contributor · vLLM · SGLang · llama.cpp',
   location: 'Taichung City, Taiwan',
   about: [
-    'I am an AI Inference Engineer and AI Product/Project Manager who works across the stack—from benchmarking quantized LLMs and deploying on-premises GPU clusters to aligning model capabilities with real production workflows and user trust.',
+    'I am an AI Inference Engineer who works across the stack—from benchmarking quantized LLMs and deploying on-premises GPU clusters to aligning model capabilities with real production workflows and user trust.',
     'As an active contributor to SGLang, vLLM, and llama.cpp, I focus on making open-source inference engines faster, more reliable, and easier to deploy in resource-constrained and security-sensitive environments.',
   ],
   contact: {
