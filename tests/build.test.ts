@@ -5,29 +5,31 @@ import path from 'node:path';
 
 const distDir = path.resolve(process.cwd(), 'dist');
 
-describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages Output (BDD Scenarios)', () => {
+describe('Feature: Static Production Build & GitHub Pages Output (BDD Scenarios)', () => {
   beforeAll(() => {
+    fs.rmSync(distDir, { recursive: true, force: true });
     execSync('npm run build', { stdio: 'pipe' });
   }, 60000);
 
-  it('Scenario: Given the full Astro site, When npm run build completes, Then dist/ contains homepage, writing index, both blog articles, 404 page, and RSS feed', () => {
-    const expectedFiles = [
-      'index.html',
-      '404.html',
-      'rss.xml',
-      'writing/index.html',
-      'writing/pm-guide-in-the-ai-era-part-1/index.html',
-      'writing/contributing-to-llm-inference-engines/index.html',
-    ];
-
-    for (const relPath of expectedFiles) {
-      const fullPath = path.join(distDir, relPath);
-      expect(fs.existsSync(fullPath), `Expected ${relPath} to exist in dist/`).toBe(true);
-    }
+  it('Scenario: Given the Astro site without Writing pages, When npm run build completes, Then dist/ contains homepage and 404 page and no writing/ or rss.xml output', () => {
+    expect(fs.existsSync(path.join(distDir, 'index.html'))).toBe(true);
+    expect(fs.existsSync(path.join(distDir, '404.html'))).toBe(true);
+    expect(fs.existsSync(path.join(distDir, 'writing'))).toBe(false);
+    expect(fs.existsSync(path.join(distDir, 'rss.xml'))).toBe(false);
+    expect(
+      fs.existsSync(path.resolve(process.cwd(), 'src/components/WritingPreview.astro'))
+    ).toBe(false);
+    expect(
+      fs.existsSync(path.resolve(process.cwd(), 'src/layouts/PostLayout.astro'))
+    ).toBe(false);
+    expect(
+      fs.existsSync(path.resolve(process.cwd(), 'src/pages/writing'))
+    ).toBe(false);
   });
 
-  it('Scenario: Visitor inspects Hero, Open-Source PRs, Experience, Skills/Certs, Writing Preview, and Contact on homepage with safe rel attributes', () => {
+  it('Scenario: Visitor inspects Hero, Open-Source PRs, Experience, Skills/Certs, and Contact on homepage with safe rel attributes and no Writing references', () => {
     const indexHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf-8');
+    const notFoundHtml = fs.readFileSync(path.join(distDir, '404.html'), 'utf-8');
     expect(indexHtml).toContain('Cheng-Wei (Will) Liu');
     expect(indexHtml).toContain('劉承威');
     expect(indexHtml).not.toContain('劉承瑋');
@@ -44,8 +46,12 @@ describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages
     expect(indexHtml).toContain('NVIDIA DGX Spark');
     expect(indexHtml).toContain('AMD Strix Halo');
     expect(indexHtml).not.toContain('id="writing"');
-    expect(indexHtml).not.toContain('Writing & Technical Notes');
-    expect(indexHtml).not.toContain('Read Blog →');
+    expect(indexHtml).not.toContain('/writing');
+    expect(indexHtml).not.toContain('Writing');
+    expect(indexHtml).not.toContain('rss.xml');
+    expect(indexHtml).not.toContain('RSS ↗');
+    expect(notFoundHtml).not.toContain('/writing');
+    expect(notFoundHtml).not.toContain('Writing');
     expect(indexHtml).toContain('id="contact"');
     expect(indexHtml).toContain('04 / CONTACT');
     expect(indexHtml).not.toContain('05 / CONTACT');
@@ -57,14 +63,8 @@ describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages
     expect(indexHtml).toContain('rel="noopener noreferrer"');
   });
 
-  it('Scenario: Sensitive personal data from LinkedIn never leaks in any built HTML/XML file', () => {
-    const filesToCheck = [
-      'index.html',
-      'rss.xml',
-      'writing/index.html',
-      'writing/pm-guide-in-the-ai-era-part-1/index.html',
-      'writing/contributing-to-llm-inference-engines/index.html',
-    ];
+  it('Scenario: Sensitive personal data from LinkedIn never leaks in any built HTML file', () => {
+    const filesToCheck = ['index.html', '404.html'];
 
     for (const file of filesToCheck) {
       const content = fs.readFileSync(path.join(distDir, file), 'utf-8');
@@ -74,41 +74,11 @@ describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages
     }
   });
 
-  it('Scenario: Published articles appear in valid RSS 2.0 XML while drafts stay excluded', () => {
-    const rssXml = fs.readFileSync(path.join(distDir, 'rss.xml'), 'utf-8');
-    expect(rssXml).toContain('<rss version="2.0"');
-    expect(rssXml).toContain('AI 時代的 PM 指南');
-    expect(rssXml).toContain('Contributing to the Open-Source LLM Inference Ecosystem');
-    const itemCount = (rssXml.match(/<item>/g) ?? []).length;
-    expect(itemCount).toBe(2);
-  });
-
   it('Scenario: GitHub Actions workflow runs the full test suite including build.test.ts', () => {
     const workflowYaml = fs.readFileSync(
       path.resolve(process.cwd(), '.github/workflows/deploy.yml'),
       'utf-8'
     );
     expect(workflowYaml).toContain('npm test');
-  });
-
-  it('Scenario: Writing archive (/writing) includes language filter buttons (ZH-TW and EN) alongside topic tags', () => {
-    const writingHtml = fs.readFileSync(path.join(distDir, 'writing/index.html'), 'utf-8');
-    expect(writingHtml).toContain('data-tag="ZH-TW"');
-    expect(writingHtml).toContain('data-tag="EN"');
-  });
-
-  it('Scenario: Article detail pages render previous/next article navigation links', () => {
-    const post1Html = fs.readFileSync(
-      path.join(distDir, 'writing/pm-guide-in-the-ai-era-part-1/index.html'),
-      'utf-8'
-    );
-    const post2Html = fs.readFileSync(
-      path.join(distDir, 'writing/contributing-to-llm-inference-engines/index.html'),
-      'utf-8'
-    );
-    expect(post1Html).toContain('class="post-nav');
-    expect(post1Html).toContain('/writing/contributing-to-llm-inference-engines');
-    expect(post2Html).toContain('class="post-nav');
-    expect(post2Html).toContain('/writing/pm-guide-in-the-ai-era-part-1');
   });
 });

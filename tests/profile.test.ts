@@ -4,14 +4,14 @@ import { withBase } from '../src/utils/url';
 
 describe('Feature: GitHub Pages Subpath Resilience (withBase URL helper)', () => {
   it('Scenario: Given root base path "/", When resolving internal routes, Then paths remain root-relative', () => {
-    expect(withBase('/writing', '/')).toBe('/writing');
+    expect(withBase('/favicon.svg', '/')).toBe('/favicon.svg');
     expect(withBase('/', '/')).toBe('/');
     expect(withBase('/#open-source', '/')).toBe('/#open-source');
   });
 
   it('Scenario: Given repository subpath "/personal_webpage", When resolving internal routes, Then paths are prefixed cleanly', () => {
-    expect(withBase('/writing', '/personal_webpage')).toBe('/personal_webpage/writing');
-    expect(withBase('/writing/', '/personal_webpage/')).toBe('/personal_webpage/writing/');
+    expect(withBase('/favicon.svg', '/personal_webpage')).toBe('/personal_webpage/favicon.svg');
+    expect(withBase('/#experience', '/personal_webpage/')).toBe('/personal_webpage/#experience');
     expect(withBase('/', '/personal_webpage')).toBe('/personal_webpage/');
     expect(withBase('/#open-source', '/personal_webpage')).toBe('/personal_webpage/#open-source');
   });
