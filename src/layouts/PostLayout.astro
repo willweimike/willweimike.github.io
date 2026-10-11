@@ -1,0 +1,106 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { withBase } from '../utils/url';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags: string[];
+  lang: string;
+  readingLabel: string;
+}
+
+const { title, description, pubDate, updatedDate, tags, lang, readingLabel } = Astro.props;
+const pubDateStr = pubDate.toISOString().slice(0, 10);
+const updatedDateStr = updatedDate ? updatedDate.toISOString().slice(0, 10) : null;
+---
+
+<BaseLayout title={`${title} — Cheng-Wei (Will) Liu`} description={description}>
+  <article class="post-article">
+    <a href={withBase('/writing')} class="mono back-link">
+      ← Back to Writing
+    </a>
+
+    <header class="post-header">
+      <div class="post-meta mono">
+        <time datetime={pubDateStr}>{pubDateStr}</time>
+        {updatedDateStr && <span>(Updated {updatedDateStr})</span>}
+        <span>·</span>
+        <span>{readingLabel}</span>
+        <span>·</span>
+        <span class="lang-pill">{lang.toUpperCase()}</span>
+      </div>
+
+      <h1 class="post-h1">{title}</h1>
+      <p class="post-subtitle">{description}</p>
+
+      <div class="tag-row">
+        {tags.map((tag) => <span class="tag">#{tag}</span>)}
+      </div>
+    </header>
+
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-article {
+    padding-top: 0.5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.84rem;
+    color: var(--accent-primary);
+    margin-bottom: 1.5rem;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+
+  .post-header {
+    padding-bottom: 1.75rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .lang-pill {
+    color: var(--accent-primary);
+    font-weight: 600;
+  }
+
+  .post-h1 {
+    font-size: clamp(1.65rem, 3.8vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-subtitle {
+    font-size: 1.02rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+</style>

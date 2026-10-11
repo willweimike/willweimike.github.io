@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../utils/url';
+---
+
+<BaseLayout title="404 — Page Not Found">
+  <section class="not-found card">
+    <p class="mono code">404 / NOT_FOUND</p>
+    <h1>Page not found</h1>
+    <p class="desc">
+      The route you requested does not exist or has been moved.
+    </p>
+    <div class="actions mono">
+      <a href={withBase('/')} class="btn">← Return Home</a>
+      <a href={withBase('/writing')} class="btn">Browse Writing →</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    margin-top: 3rem;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+
+  .code {
+    color: var(--accent-primary);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .not-found h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .desc {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background: var(--badge-bg);
+    color: var(--accent-primary);
+    border: 1px solid var(--border-accent);
+    font-size: 0.84rem;
+  }
+</style>
