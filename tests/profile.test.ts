@@ -20,6 +20,7 @@ describe('Feature: GitHub Pages Subpath Resilience (withBase URL helper)', () =>
 describe('Feature: Portfolio Identity, Open-Source Contributions, and Privacy Protection', () => {
   it('Scenario: Visitor views Will Liu core identity and public contact channels', () => {
     expect(profileData.name).toBe('Cheng-Wei (Will) Liu');
+    expect(profileData.zhName).toBe('劉承威');
     expect(profileData.headline).toBe('AI Inference Engineer | AI PM');
     expect(profileData.location).toBe('Taichung City, Taiwan');
     expect(profileData.contact.github).toBe('https://github.com/willweimike/');

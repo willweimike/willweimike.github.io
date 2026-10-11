@@ -29,6 +29,8 @@ describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages
   it('Scenario: Visitor inspects Hero, Open-Source PRs, Experience, Skills/Certs, Writing Preview, and Contact on homepage with safe rel attributes', () => {
     const indexHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf-8');
     expect(indexHtml).toContain('Cheng-Wei (Will) Liu');
+    expect(indexHtml).toContain('劉承威');
+    expect(indexHtml).not.toContain('劉承瑋');
     expect(indexHtml).toContain('AI Inference Engineer | AI PM');
     expect(indexHtml).toContain('id="open-source"');
     expect(indexHtml).toContain('https://github.com/sgl-project/sglang/pull/43293');

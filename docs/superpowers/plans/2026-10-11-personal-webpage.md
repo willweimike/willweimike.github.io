@@ -312,7 +312,7 @@ export interface ProfileData {
 
 export const profileData: ProfileData = {
   name: 'Cheng-Wei (Will) Liu',
-  zhName: '劉承瑋',
+  zhName: '劉承威',
   handle: 'willweimike',
   headline: 'AI Inference Engineer | AI PM',
   tagline:
