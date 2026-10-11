@@ -71,4 +71,33 @@ describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages
     const itemCount = (rssXml.match(/<item>/g) ?? []).length;
     expect(itemCount).toBe(2);
   });
+
+  it('Scenario: GitHub Actions workflow runs the full test suite including build.test.ts', () => {
+    const workflowYaml = fs.readFileSync(
+      path.resolve(process.cwd(), '.github/workflows/deploy.yml'),
+      'utf-8'
+    );
+    expect(workflowYaml).toContain('npm test');
+  });
+
+  it('Scenario: Writing archive (/writing) includes language filter buttons (ZH-TW and EN) alongside topic tags', () => {
+    const writingHtml = fs.readFileSync(path.join(distDir, 'writing/index.html'), 'utf-8');
+    expect(writingHtml).toContain('data-tag="ZH-TW"');
+    expect(writingHtml).toContain('data-tag="EN"');
+  });
+
+  it('Scenario: Article detail pages render previous/next article navigation links', () => {
+    const post1Html = fs.readFileSync(
+      path.join(distDir, 'writing/pm-guide-in-the-ai-era-part-1/index.html'),
+      'utf-8'
+    );
+    const post2Html = fs.readFileSync(
+      path.join(distDir, 'writing/contributing-to-llm-inference-engines/index.html'),
+      'utf-8'
+    );
+    expect(post1Html).toContain('class="post-nav');
+    expect(post1Html).toContain('/writing/contributing-to-llm-inference-engines');
+    expect(post2Html).toContain('class="post-nav');
+    expect(post2Html).toContain('/writing/pm-guide-in-the-ai-era-part-1');
+  });
 });

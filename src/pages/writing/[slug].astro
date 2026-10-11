@@ -4,14 +4,21 @@ import PostLayout from '../../layouts/PostLayout.astro';
 import { calculateReadingTime } from '../../utils/readingTime';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+  );
+  return posts.map((post, idx) => {
+    const prev = idx > 0 ? { id: posts[idx - 1].id, title: posts[idx - 1].data.title } : null;
+    const next =
+      idx < posts.length - 1 ? { id: posts[idx + 1].id, title: posts[idx + 1].data.title } : null;
+    return {
+      params: { slug: post.id },
+      props: { post, prevPost: prev, nextPost: next },
+    };
+  });
 }
 
-const { post } = Astro.props;
+const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await render(post);
 const reading = calculateReadingTime(post.body ?? '');
 ---
@@ -24,6 +31,8 @@ const reading = calculateReadingTime(post.body ?? '');
   tags={post.data.tags}
   lang={post.data.lang}
   readingLabel={reading.label}
+  prevPost={prevPost}
+  nextPost={nextPost}
 >
   <Content />
 </PostLayout>

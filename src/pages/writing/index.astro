@@ -9,6 +9,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
+const allLangs = Array.from(new Set(posts.map((post) => post.data.lang.toUpperCase())));
 const allTags = Array.from(new Set(posts.flatMap((post) => post.data.tags)));
 ---
 
@@ -26,6 +27,9 @@ const allTags = Array.from(new Set(posts.flatMap((post) => post.data.tags)));
 
       <div class="filter-bar mono" id="tag-filters">
         <button type="button" class="filter-btn active" data-tag="all">All ({posts.length})</button>
+        {allLangs.map((lang) => (
+          <button type="button" class="filter-btn lang-filter" data-tag={lang}>{lang}</button>
+        ))}
         {allTags.map((tag) => (
           <button type="button" class="filter-btn" data-tag={tag}>#{tag}</button>
         ))}
@@ -36,11 +40,12 @@ const allTags = Array.from(new Set(posts.flatMap((post) => post.data.tags)));
       {posts.map((post) => {
         const reading = calculateReadingTime(post.body ?? '');
         const dateStr = post.data.pubDate.toISOString().slice(0, 10);
+        const filterTokens = [post.data.lang.toUpperCase(), ...post.data.tags].join(',');
         return (
           <a
             href={withBase(`/writing/${post.id}`)}
             class="card post-item"
-            data-tags={post.data.tags.join(',')}
+            data-tags={filterTokens}
           >
             <div class="post-meta mono">
               <time datetime={dateStr}>{dateStr}</time>
