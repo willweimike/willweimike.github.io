@@ -72,7 +72,7 @@ export const profileData: ProfileData = {
   name: 'Cheng-Wei (Will) Liu',
   zhName: '劉承威',
   handle: 'willweimike',
-  headline: 'AI Inference Engineer | AI PM',
+  headline: 'AI Inference Engineer',
   tagline:
     'Bridging production-grade LLM inference optimization (vLLM, SGLang, llama.cpp) and on-prem GPU infrastructure with pragmatic AI product management.',
   statusBadge: 'Active OSS Contributor · vLLM · SGLang · llama.cpp',
@@ -224,7 +224,6 @@ export const profileData: ProfileData = {
       title: 'AI Product & Software Engineering',
       description: 'Bridging technical capabilities with user workflows and system design.',
       skills: [
-        'Project Management (AI PM)',
         'Intelligent Agents',
         'Software Design',
         'Software Development',
