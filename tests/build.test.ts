@@ -45,6 +45,8 @@ describe('Feature: Static Production Build, Blog Routes, RSS Feed & GitHub Pages
     expect(indexHtml).toContain('AMD Strix Halo');
     expect(indexHtml).toContain('id="writing"');
     expect(indexHtml).toContain('id="contact"');
+    const footerHtml = indexHtml.split('<footer')[1] ?? '';
+    expect(footerHtml).not.toContain('Taichung City, Taiwan');
     expect(indexHtml).toContain(
       'https://www.credly.com/badges/dd1d57fc-d6cf-4c5a-88e3-14432bec7ef0/linked_in_profile'
     );
